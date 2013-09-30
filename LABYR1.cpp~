@@ -26,7 +26,7 @@ int main(){
 	
 	For(z,1,t) {
 		scanf("%d%d\n",&cols,&rows);
-		For(j,1,rows) scanf("%s", s[j-1]);
+		For(j,1,rows) scanf("%s", s[i-1]);
 		For(i,0,rows-1) For(j,0,cols-1) if (s[i][j]=='.') {
 			maxd=-1; Fill(v,0);
 			dfs(i,j,0);

@@ -1,33 +1,22 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <cstring>
-#include <algorithm>
+#include <cstdio>
 using namespace std;
-int mat[100][100];
-int solve (int n, int l) {
-	if (l == 3)
-		return 1;
-	else if (mat[n][l] != -1)
-		return mat[n][l];
-	else {
-		int s = 0;
-		for (int i = 0 ; i <= 9 ; i++)
-			if (n <= i)
-				s = s + solve(i, l+1);
-		mat[n][l] = s;
-		return s;
-	}		
-}
-main() {
-	int s = 0 ;
-	memset(mat, -1, sizeof(mat));
-	for (int i = 0 ; i <= 9 ; i++)
-	{
-		cout << endl << solve(i, 1);
-		s = s + solve(i, 1);
-//		cout << endl << solve(i,1);
+
+long long dp[65][10];
+
+int main() {
+	int test, cs, n, i, j, k;
+	for(i = 0; i < 10; i++) dp[0][i] = 1;
+	for(i = 1; i < 65; i++) {
+		for(j = 0; j < 10; j++) {
+			for(k = 0; k <= j; k++) {
+				dp[i][j] += dp[i-1][k];
+			}
+		}
 	}
-	
-	cout << endl << " s : "  << s;
+	scanf("%d", &test);
+	while(test--) {
+		scanf("%d %d", &cs, &n);
+		printf("%d %lld\n", cs, dp[n][9]);
+	}
+	return 0;
 }

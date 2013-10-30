@@ -1,76 +1,62 @@
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <deque>
-#include <stack>
-#include <bitset>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
-#include <cctype>
 #include <cstring>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#define MAX 1844674407370955161L
 
-/* Templates*/
-#define INF 1<<32
-#define PI 3.141592653589793
-#define AND &&
-#define OR || 
-#define NOT !
-#define all(c) c.begin(),c.end()
-#define present(container, element) (container.find(element) != container.end()) 
-#define cpresent(container, element) (find(all(container),element) != container.end())
-#define ins insert
-#define sz size
-#define pb push_back
-#define pp pop
-#define v(data) vector<data>
-#define vi vector<int>
-#define vvi vector<vector<int> >
-#define vs vector<string>
-#define mp make_pair()
-#define pi pair<int, int>
-#define vpi v(pi)
-#define matrix(data) vector<vector<data> > 
-#define FOR(i,end,begin) for(int i=start; i <= end; i++)
-#define TR(c,it) for(typeof(c.begin()) it = c.begin(); it != c.end(); it++)
-#define REP(i,end) for(int i = 0 ; i < end; i++)
-#define MAX 1000
-#define con(c) atoi(c)
 using namespace std;
-
-char input[] = "1+2*3+4";
-int n = sizeof(input) / sizeof(char);
-int arr[4];
-
-int solve(int i, int j)
-{
-	if (i == j)
-		return arr[i];
-	else
-	{
-		int m = 9999;
-		for(int cut = i+1; cut <= j; cut++)
-		{
-			int expr = solve(i,cut) + solve(cut, j);
-			if() 
-		}
-	}		
+typedef long long int ll;
+string input, ops;
+vector<ll> numbers;
+ll dp[102][102], dp2[102][102];;
+ll f(int i, int j){
+	if(i == j) return numbers[i];
+	else if(dp[i][j] != -1) return dp[i][j];
+	ll m = -1, cop;
+	for(int k = i; k < j; k++) {
+		if(ops[k] == '+')
+			cop = f(i, k) + f(k + 1, j);
+		else
+			cop = f(i, k) * f(k + 1, j);
+		m = max(m, cop);
+	}
+	return dp[i][j] = m;
 }
-main()
-{
-	int M[MAX][MAX];
-	int n = sizeof(input) / sizeof(char);
-	for(int i = 0,j = 0 ; i < 4; i++,j+=2)
-		arr[i] = atoi(&input[j]);
-	
-	printf("\n%d",solve(0,3));
+
+ll f1(int i, int j) {
+	if(i == j) return numbers[i];
+	else if(dp2[i][j] != -1) return dp2[i][j];
+	ll m = MAX, cop;
+	for(int k = i; k < j; k++) {
+		if(ops[k] == '+') cop = f1(i, k) + f1(k + 1, j);
+		else cop = f1(i, k) * f1(k + 1, j);
+		m = min(m, cop);
+	}
+	return dp2[i][j] = m;
+}
+
+int main() {
+	// your code goes here
+	int T;
+	cin >> T;
+	while(T--) {
+		cin >> input;
+		if(input.size() == 1) {
+			cout << input[0] << ' '  << input[0] << '\n';
+			continue;
+		}
+		memset(dp, -1, sizeof dp);
+		memset(dp2, -1, sizeof dp2);
+		for(int i = 0; i < input.size(); i++) {
+			if(input[i] == '+' || input[i] == '*')
+				ops += input[i];
+			else
+				numbers.push_back(input[i] - '0');
+		}
+		cout << f(0, numbers.size() - 1) << ' ' <<  f1(0, numbers.size() - 1) << '\n';
+		ops.clear();
+		numbers.clear();
+	}
+	return 0;
 }

@@ -19,11 +19,6 @@ vector<int> intersection_vector(3);
 
 int Solve(int row , int column)
 {
-//	static int j = 0 ; 
-//	j++;
-//	cout<<"\n j :"<<j ;
-//	cout<<"\n row "<<row<<" column :"<<column<<" matrix[row][column] :"<<matrix[row][column];
-	//sleep(1500*1000);
 	cout<<"\n\n";
 	TR(matrix[0] , it)
 		cout<<*it<<" ";
@@ -37,20 +32,14 @@ int Solve(int row , int column)
 	else
 	{
 		int number = matrix[row][column];
-//		The element is present in the intersection_vector		
 		if(binary_search (intersection_vector.begin() , intersection_vector.end() , number))
 		{
-				//search for the element in the 1-d vectors
-			//	cout<<"\n im in";
 				int row_index = (row+1) % 2 , index ,s1 , s2;
 				vector<int>::iterator low;
 				low = lower_bound (matrix[row_index].begin(),matrix[row_index].end(),number);
 				index = low - matrix[row_index].begin(); //gives the index at which it occurs
-				//cout<<"\n index :"<<index;
 				s1 = Solve(row_index,index+1);
-				//cout<<"\n did i execute?";
 				s2 = Solve(row , column + 1);
-			//	cout<<"\n s1:"<<s1<<" s2: "<<s2;
 				matrix[row][column] = matrix[row][column] + max(s1,s2);
 				
 		}	 
@@ -61,19 +50,6 @@ int Solve(int row , int column)
 		return matrix[row][column];
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 main()
 {
 	cout<<"\n enter the values for the first vector";
@@ -104,5 +80,4 @@ main()
 	TR(matrix[1] , it)
 		cout<<*it<<" ";
 }
-
 

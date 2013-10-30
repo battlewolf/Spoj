@@ -3,23 +3,17 @@
 #include <algorithm>
 #include <vector>
 #define FOR(i,start,end) for(int i = start; i <= end; i++)
-
 using namespace std;
-
 int t, N, e;
 vector<bool> visited;
 vector<vector<int> > graph;
-
 void BFS(int start) {
-	
 	visited[start] = 1;
 	queue<int> Q;
 	Q.push(start);
 	while(!Q.empty()) {
-		
 		int node = Q.front();
 		Q.pop();
-		
 		for(typeof(graph[node].begin()) it = graph[node].begin(); it != graph[node].end(); it++) {
 			int n = *it;
 			if(!visited[n]) {
@@ -27,25 +21,8 @@ void BFS(int start) {
 				Q.push(n);
 			}
 		}
-		
 	}
-	
-	
 }
-
-
-/*
-void dispGraph() {
-	FOR(i,0,N-1){
-		for(typeof(graph[i].begin()) it = graph[i].begin(); it != graph[i].end(); it++)
-			cout << *it << " ";
-		cout << endl ;
-	
-	}
-	
-}
-*/
-
 main() {
 	cin >> t;
 	while(t--) {
@@ -70,6 +47,5 @@ main() {
 		cout << endl << count;
 		visited.clear();
 		graph.clear();		
-		
 	}
 }

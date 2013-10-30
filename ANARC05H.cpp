@@ -1,30 +1,26 @@
-#include<iostream>
-#include<set>
-#include<stack>
-#include<cstdio>
-#include<cstdlib>
-#include<map>
-#include<queue>
-#include<string>
-//#define N 8
-#define all(c) c.begin(),c.end()
-#define TR(c,it) for(typeof(c.begin()) it = c.begin() ; it != c.end() ; it++)
+#include <cstdio>
+#include <cstring>
 using namespace std;
-//int arr[1000],N;
-vector<int> arr;
-int N;
-
-
-main()
-{
-
-	string s;
-	cin>>s;
-//	N = s.size();
-//	arr.resize(N);		
-	typeof(s.begin()) it = s.begin();		
-	while(it != s.end()){
-		char c = *it ;
-		arr.push_back(atoi(c));				
+char num[33]; int len, dp[1024][1024];
+int f(int p, int ps) {
+	if(p == len) return 1;
+	else if(dp[p][ps] != -1) return dp[p][ps];
+	else {
+		int sum = 0, c = 0;
+		for(int i = p; i < len; i++) {
+			sum = sum + num[i] - '0';
+			if(sum >= ps)
+				c = c + f(i + 1, sum);
+		}	
+		return dp[p][ps] = c;
+	}
+}
+main() {
+	int t = 1;
+	while(scanf("%s", num) == 1 && (num[0] >= '0' && num[0] <= '9'))
+	{
+		memset(dp, -1, sizeof(dp));
+		len = strlen(num);
+		printf("%d. %d\n", t++, f(0, 0));
 	}
 }

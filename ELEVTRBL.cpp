@@ -1,31 +1,47 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <map>
+#include <set>
+#include <vector>
 #include <queue>
+#include <algorithm>
+#define MAX 100010
+#define ll long long int
+#define INF 987654321
+#define REP(i,size) for(int i = 0; i < size; i++)
+#define TR(c,it) for(typeof(c.begin()) it = c.begin(); it != c.end(); it++)
 using namespace std;
-int floors, start, goal, up, down;
 
-int bfs() {
-	queue<pair<int, int> > Q; // the floor number and the distance as a pair
-	Q.push(pair<int, int> (start, 0));
-	bool seen[floors+1]; memset(seen, 0, sizeof(seen));
-	int f, d;
+ll floors, start, goal, up, down;
+
+ll bfs() {
+	queue<ll> Q;
+	ll u, v, d;
+	Q.push(start); ll build[floors + 1];
+	memset(build, -1, sizeof build);
+	build[start] = 0;
 	while(!Q.empty()) {
-		f = Q.front().first; d = Q.front().second;
+		u = Q.front();
 		Q.pop();
-		if(f == goal) return d;
-		seen[f] = 1;
-		if(f + up <= floors && !seen[f + up]) 
-			Q.push(pair<int, int> (f + up, d + 1));
-		if(f - down >= 0 && !seen[f - down])
-			Q.push(pair<int, int> (f - down, d + 1));
+		if(u == goal) return build[u];
+		if(u + up <= floors && build[u+up] == -1) {
+			Q.push(u + up);
+			build[u + up] = build[u] + 1;
+		}else if(u - down >= 1 && build[u-down] == -1) {
+			Q.push(u - down);
+			build[u - down] = build[u] + 1;
+		}
 	}
 	return -1;
 }
 
 main() {
-	int d;
-	scanf("%d %d %d %d %d", &floors, &start, &goal, &up, &down);
-	if((d = bfs()) == -1) printf("use the stairs\n");
-	else printf("%d\n", d);	
+	ll d;
+	cin >> floors >> start >> goal >> up >> down;
+	if((d = bfs()) == -1) cout << "use the stairs\n";
+	else cout << d << '\n';
 }
+
+
+

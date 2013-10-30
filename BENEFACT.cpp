@@ -5,42 +5,43 @@
 #include <set>
 #include <algorithm>
 #include <map>
+#define MAX 50000
 #define FOR(i,end) for(int i = 0; i < end; i++)
 using namespace std;
 typedef pair<int,int> pii;
-int V, E, endnode;
+int V, E, maxn, maxd;
+bool seen[MAX + 1];
+vector<vector<pii> > graph(MAX+1);
 
-pii dfs ()
-
-
-void printGraph(vector<vector<node> > &graph) {
-	FOR(i, V) {
-		for(typeof(graph[i+1].begin()) it = graph[i+1].begin(); it != graph[i+1].end(); it++) {
-			node N = *it;
-			cout << N.vertex << N.cost << " ";
-		}
-		cout << endl;
+void dfs(int node, int dist) {
+	if(dist > maxd) {
+		maxn = node;
+		maxd = dist;
 	}
+	seen[node] = 1;
+	//consider the adjacent nodes
+	for(typeof(graph[node].begin()) it = graph[node].begin(); it != graph[node].end(); it++) 
+			if(!seen[(*it).second])
+				dfs((*it).second, dist + it->first);
 }
 
-
 main() {
-	int T;
-	scanf("%d", &T);
-	while(T--) {
-		scanf("%d", &V);
-		E = V - 1;
-		vector<vector<pii> > graph(V+1);
-		bool seen[V+1];
-		FOR(i,E) {
-			int vertex1, vertex2, cost;
-			scanf("%d%d%d", &vertex1, &vertex2, &cost);
-			graph[vertex1].push_back(pii (vertex2, cost));
-			graph[vertex2].push_back(pii (vertex1, cost));
+	int t, u, v, we;
+	scanf("%d", &t);
+	while(t--) {
+		scanf("%d", &V); E = V - 1;
+		for(int i = 1; i <= V; i++) graph[i].clear();
+		for(int i = 1; i <= E; i++) {
+			scanf("%d %d %d", &u, &v, &we);
+			graph[u].push_back(pii (we, v));
+			graph[v].push_back(pii (we, u));
 		}
-		memset(seen, 0, sizeof(seen));
-		
-		
-//		printGraph(graph);			
+		memset(seen, 0, sizeof(bool) * (V+1));
+		maxd = -1;
+		dfs(1, 0);
+		memset(seen, 0, sizeof(bool) * (V+1));
+		maxd = -1;
+		dfs(maxn, 0);
+		printf("%d\n", maxd);
 	}
 }

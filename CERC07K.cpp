@@ -33,7 +33,6 @@ void BFS(pi &start) {
 	while(!Q.empty()) {
 		pi u = Q.front().first;
 		int umask = Q.front().second;
-//		cout << endl << " STATE : " << " x : " << u.first << " y : " << u.second << " mask : " << umask;
 		Q.pop();
 		REP(i, 0, 3) {
 			int vx = u.first + dirx[i], vy = u.second + diry[i], ux = u.first, uy = u.second, vmask;
@@ -61,7 +60,6 @@ void BFS(pi &start) {
 							break;
 					}
 					if(state[vx][vy][vmask] == 0) {//which means we haven't seen this node yet
-//						cout <<"\nKEY : "<<" vx : " << vx << " vy : " << vy << " vmask : "<<vmask;
 						Q.push( pii (pi (vx, vy), vmask) ) ;
 						state[vx][vy][vmask] = state[ux][uy][umask] + 1;
 					}

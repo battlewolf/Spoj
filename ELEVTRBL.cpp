@@ -28,7 +28,7 @@ ll bfs() {
 		if(u + up <= floors && build[u+up] == -1) {
 			Q.push(u + up);
 			build[u + up] = build[u] + 1;
-		}else if(u - down >= 1 && build[u-down] == -1) {
+		}if(u - down >= 1 && build[u-down] == -1) {
 			Q.push(u - down);
 			build[u - down] = build[u] + 1;
 		}
@@ -39,7 +39,8 @@ ll bfs() {
 main() {
 	ll d;
 	cin >> floors >> start >> goal >> up >> down;
-	if((d = bfs()) == -1) cout << "use the stairs\n";
+	if((up == 0 && down == 0 && start != goal) || (up == 0 && goal > start) || (down == 0 && goal < start) ) cout << "use the stairs\n";
+	else if((d = bfs()) == -1) cout << "use the stairs\n";
 	else cout << d << '\n';
 }
 

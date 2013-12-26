@@ -6,25 +6,34 @@
 #include <iterator>
 #include <vector>
 #include <string>
-#define FOR(i,size) for(int i = 0 ; i < size ; i++)
+
+#define INF 1<<20
+#define REP(i, end) for(int i = 0; i < end; ++i)
 using namespace std;
-vector<vector<int> > mat1,mat2;
-int N,T;
+int N, T, time[50][50], toll[50][50];
+typedef pair<int, int> pii;
+typedef vector<vector<pii> > vvp;
+pii doIt(int curr, int time_left, vvp &memo)
+{
+	if(time_left < 0) return pii (INF, INF);
+	if(curr == N - 1) return pii (0, 0);
+	if(memo[curr][time_left].first != -1)
+		return memo[curr][time_left];
+	pii ret (INF, INF);
+
+}
+
 
 main()
 {
-	while(1)
+	while(cin >> N >> T, N)
 	{
-		scanf("%d%d",&N,&T);
-		if(N==0 && T==0) break;
-		mat1.resize(N);
-		mat2.resize(N);
-		FOR(i,N)
-		{
-			mat1[i].resize(N);
-			mat2[i].resize(N);
-			FOR(j,N) scanf("%d",&mat1[i][j]);
-		}
-		FOR(i,N) FOR(j,N) scanf("%d",&mat2[i][j]);
+		REP(i, N)
+			REP(j, N)
+				cin >> time[i][j];
+		REP(i, N)
+			REP(j, N)
+				cin >> toll[i][j];
+		vector<vector<pii> > memo(N, vector<pii> (T, pii(-1, -1)));
 	}
 }

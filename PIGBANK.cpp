@@ -5,10 +5,8 @@
 #define ALL(c) c.begin(),c.end()
 #define TR(c,it) for(typeof(c.begin()) it = c.begin() ; it != c.end() ; it++)
 using namespace std;
-
 vector<LL> Weights; // this array will hold the solutions and will compute bottum up
 map<LL,LL> Value_Weight;// this pair will store the value weight pair
-
 int main()
 {
 	LL T,E,F,N,P,W,Weight_Needed;
@@ -55,10 +53,7 @@ int main()
 						min = temp;
 				}
 			}
-		
 				Weights[i] = min ;	
-		
-			
 		}
 		if(Weights[Weight_Needed] == 999999)
 			cout<<endl<<"This is impossible.";
@@ -66,22 +61,8 @@ int main()
 			cout<<endl<<"The minimum amount of money in the piggy-bank is "<<Weights[Weight_Needed]<<".";
 		/*TR(Value_Weight,it)
 			cout<<endl<<it->first<<" "<<it->second;*/
-		
 		Weights.erase(ALL(Weights));
 		Value_Weight.erase(ALL(Value_Weight));
-		
-		
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
 
